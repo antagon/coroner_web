@@ -1,0 +1,92 @@
+<html>
+	<head>
+		<title>Coroner: A Packet Dissection Framework</title>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+		<link rel="stylesheet" type="text/css" href="style.css">
+	</head>
+	<body style="background-color:black;">
+		<div id="content">
+			<div id="logo"><a href="#">CORONER</a></div>
+
+			<p style="font-size:90%;"> <em>A Packet Dissection Framework</em> </p>
+
+			<div id="menu">
+				<a href="#">Documentation</a>
+				<span class="delim">&nbsp;</span>
+				<a href="#">Source Code</a>
+			</div>
+
+			<h2>About</h2>
+
+			<p>
+				Coroner is a packet dissection framework for <em><a
+				href="http://codeward.org/software/capdiss">capdiss</a></em> &#8212;
+				a runtime environment for reading capture files. The framework
+				is written in <em>Lua</em>.
+			</p>
+
+			<p>
+				Coroner is a free software licensed under <strong>GPLv2</strong>.
+			</p>
+
+			<h2>Features</h2>
+
+			<ul>
+				<li>Automatically hooks to <em>capdiss</em>' event-driven API.</li>
+				<li>Wraps <em>capdiss</em> environment variables, guaranteeing the backward compatibility for your scripts.</li>
+				<li>Bundles <strong>packet dissectors</strong> for the most common Internet protocols: <em>IP</em>, <em>IPv6</em>, <em>TCP</em>, <em>UDP</em>,...</li>
+				<li>Bundles a module for easy manipulation of byte strings.</li>
+				<li>Supports ASCII colors and more...</li>
+			</ul>
+
+			<h2>Example</h2>
+
+			<pre>
+<span style="color:#859900">local</span> coroner <span style="color:#859900">=</span> <span style="color:#268bd2">require</span> (<span style="color:#269186"><span style="color:#c60000">"</span>coroner<span style="color:#c60000">"</span></span>)
+
+<span style="color:#859900">local</span> frame_cnt, ipframe_cnt <span style="color:#859900">=</span> <span style="color:#d33682">0</span>
+
+<span style="color:#859900">local</span> hooks <span style="color:#859900">=</span> {
+	<span style="color:#586e75">-- Run for each input file.</span>
+	[<span style="color:#269186"><span style="color:#c60000">"</span>@<span style="color:#c60000">"</span></span>] <span style="color:#859900">=</span> <span style="color:#859900">function</span> (filename, linktype)
+		<span style="color:#268bd2">print</span> ((<span style="color:#269186"><span style="color:#c60000">"</span>Reading a file '%s' (%s)<span style="color:#c60000">"</span></span>):format (filename, linktype))
+		frame_cnt <span style="color:#859900">=</span> <span style="color:#d33682">0</span>
+		ipframe_cnt <span style="color:#859900">=</span> <span style="color:#d33682">0</span>
+	<span style="color:#859900">end</span>,
+
+	<span style="color:#586e75">-- Run at a beginning of each frame.</span>
+	[<span style="color:#269186"><span style="color:#c60000">"</span>^<span style="color:#c60000">"</span></span>] <span style="color:#859900">=</span> <span style="color:#859900">function</span> (ts, num)
+		frame_cnt <span style="color:#859900">=</span> frame_cnt <span style="color:#859900">+</span> <span style="color:#d33682">1</span>
+	<span style="color:#859900">end</span>,
+
+	<span style="color:#586e75">-- Run for each IP packet.</span>
+	[<span style="color:#269186"><span style="color:#c60000">"</span>ip<span style="color:#c60000">"</span></span>] <span style="color:#859900">=</span> <span style="color:#859900">function</span> (packet, ts, num)
+		<span style="color:#268bd2">print</span> ((<span style="color:#269186"><span style="color:#c60000">"</span>[%05d] IP : %s -> %s<span style="color:#c60000">"</span></span>):format (num, packet:get_saddr ():color (<span style="color:#269186"><span style="color:#c60000">"</span>green<span style="color:#c60000">"</span></span>), packet:get_daddr ():color (<span style="color:#269186"><span style="color:#c60000">"</span>green<span style="color:#c60000">"</span></span>)))
+		ipframe_cnt <span style="color:#859900">=</span> ipframe_cnt <span style="color:#859900">+</span> <span style="color:#d33682">1</span>
+	<span style="color:#859900">end</span>,
+
+	<span style="color:#586e75">-- Run after all data in a file were processed.</span>
+	[<span style="color:#269186"><span style="color:#c60000">"</span>.<span style="color:#c60000">"</span></span>] <span style="color:#859900">=</span> <span style="color:#859900">function</span> ()
+		<span style="color:#268bd2">print</span> ((<span style="color:#269186"><span style="color:#c60000">"</span>%d IP packets out of %d.<span style="color:#c60000">"</span></span>):format (ipframe_cnt, frame_cnt))
+	<span style="color:#859900">end</span>
+}
+
+<span style="color:#859900">local</span> app <span style="color:#859900">=</span> coroner.new_app (coroner.app.type.DISSECTOR)
+
+<span style="color:#859900">if</span> not app:set_hooks (hooks) <span style="color:#859900">then</span>
+	<span style="color:#268bd2">error</span> (app:get_error ())
+<span style="color:#859900">end</span>
+
+<span style="color:#859900">return</span> app:run ()
+</pre>
+
+			<h2>Installation</h2>
+
+			<pre>$ sudo luarocks install coroner</pre>
+
+			<p style="text-align:right;"> <a href="http://codeward.org/">CodeWard</a> </p>
+		</div>
+	</body>
+</html>
+
