@@ -3,16 +3,23 @@
 	src: url("AlteHaasGrotesk_Bold.ttf");
 }
 div { margin:0px }
-body { font-size:80%; font-family:sans-serif; color:#DDDDDD; }
-h2 { font-size:140%; margin:20 0 20 0px; padding:0px; }
-h3 { font-size:110%; margin-bottom:5px; padding-bottom:5px; }
+body { font-size:120%; font-family:sans-serif; color:#DDDDDD; }
+h2 { font-family:AlteHaasGroteskBold; font-size:145%; margin:30 0 30 0px; padding:0px; }
 /*a { text-decoration:none; color:#2D6FAC; }*/
 a { text-decoration:none; color:#5AA0DD; }
 a:hover { text-decoration:underline; }
 p { text-align:justify; }
-#logo { color:yellow; font-size:195%; padding:8px; width:15%; text-align:center; font-family:AlteHaasGroteskBold; font-weight:bold; border:5px solid yellow; -webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px; }
-#logo a { color:yellow; }
-#logo a:hover { text-decoration:none; }
+#logo {
+	color:yellow;
+	font-size:195%;
+	padding:8px;
+	text-align:center;
+	font-family:AlteHaasGroteskBold;
+	font-weight:bold;
+	border:5px solid yellow;
+	-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;
+	text-decoration:none;
+}
 #menu { width:100%; margin:30 0 30 0px; }
 #menu .delim { font-weight:bold; margin-left:5px; margin-right:5px; }
 #content { width:70%; margin:0 auto; }
