@@ -3,7 +3,7 @@
 	src: url("AlteHaasGrotesk_Bold.ttf");
 }
 div { margin:0px }
-body { font-size:120%; font-family:sans-serif; color:#DDDDDD; }
+body { font-size:110%; font-family:sans-serif; color:#DDDDDD; }
 h2 { font-family:AlteHaasGroteskBold; font-size:145%; margin:30 0 30 0px; padding:0px; }
 /*a { text-decoration:none; color:#2D6FAC; }*/
 a { text-decoration:none; color:#5AA0DD; }
@@ -11,7 +11,7 @@ a:hover { text-decoration:underline; }
 p { text-align:justify; }
 #logo {
 	color:yellow;
-	font-size:195%;
+	font-size:190%;
 	padding:8px;
 	text-align:center;
 	font-family:AlteHaasGroteskBold;
